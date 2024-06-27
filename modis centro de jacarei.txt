@@ -1,0 +1,9 @@
+import ee
+from ee_plugin import Map
+vetor=ee.FeatureCollection('projects/centered-memory-382618/assets/Centro')
+
+image=ee.ImageCollection('MODIS/061/MOD09A1').filterDate('2017-01-01','2017-01-31')
+
+mediana=image.median().clip(vetor)
+Map.addLayer(mediana)
+Map.centerObject(vetor,10)

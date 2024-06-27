@@ -1,0 +1,9 @@
+import ee
+from ee_plugin import Map
+vetor=ee.FeatureCollection('projects/centered-memory-382618/assets/Mun_Amazonia_Legal_2021')
+
+image=ee.ImageCollection('LANDSAT/LC08/C02/T1_TOA').filterDate('2017-01-01','2017-01-31').filter(ee.Filter.lt('CLOUD_COVER',1))
+image_viz_params = {'bands': ['B5', 'B4', 'B3'],'min': 0,'max': 0.5,'gamma': [0.95, 1.1, 1]}
+
+mediana=image.median().clip(vetor)
+Map.addLayer(mediana, image_viz_params, 'false color composite')
